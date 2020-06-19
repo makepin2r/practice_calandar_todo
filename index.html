@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calendar</h1>
+    <div class="box_wrap">
+        <div class="box calendar">
+            <div class="text_wrap">
+                <p class="day"></p>
+                <p class="date"></p>
+                <p class="month-year"></p>
+            </div>
+
+            <div class="table_wrap">
+                <span class="btn left"><<</span>
+                <div class="table">
+                    <table></table>
+                </div>
+                <span class="btn right">>></span>
+            </div>
+        </div>
+        <div class="box todo">
+            <div class="form_wrap">
+                <p class="title">Todo List</p>
+                    <input type="text" placeholder="Enter a todo item">
+                <ul class="list">
+                </ul>
+            </div>
+            <div class="btn_wrap">
+                <span class="status">No items left</span>
+                <ul class="sort">
+                    <li><button>All</button></li>
+                    <li><button>Active</button></li>
+                    <li><button>Completed</button></li>
+                </ul>
+                <button class="clear">Clear</button>
+            </div>
+        </div>
+    </div>
+    <script src="calendar.js"></script>
+    <script src="todo.js"></script>
+</body>
+</html>

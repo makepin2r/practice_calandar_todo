@@ -17,11 +17,28 @@
             </div>
 
             <div class="table_wrap">
-                <span class="btn left"><<</span>
                 <div class="table">
-                    <table></table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><span class="btn left"><</span></td>
+                                <td colspan="5" id="cur-month-year"></td>
+                                <td><span class="btn right">></span></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th>
+                                <td>Sun</td>
+                                <td>Mon</td>
+                                <td>Tue</td>
+                                <td>Wed</td>
+                                <td>Thu</td>
+                                <td>Fri</td>
+                                <td>Sat</td>
+                            </th>
+                        </tbody>
+                    </table>
                 </div>
-                <span class="btn right">>></span>
             </div>
         </div>
         <div class="box todo">
@@ -34,9 +51,9 @@
             <div class="btn_wrap">
                 <span class="status">No items left</span>
                 <ul class="sort">
-                    <li><button>All</button></li>
-                    <li><button>Active</button></li>
-                    <li><button>Completed</button></li>
+                    <li><button id="all">All</button></li>
+                    <li><button id="active">Active</button></li>
+                    <li><button id="completed">Completed</button></li>
                 </ul>
                 <button class="clear">Clear</button>
             </div>

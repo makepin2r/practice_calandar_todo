@@ -2,6 +2,7 @@ const input = document.querySelector('.form_wrap input[type="text"]');
 const list = document.querySelector('.form_wrap .list');
 const clearBtn = document.querySelector('button.clear');
 const status = document.querySelector('.status');
+const btns = document.querySelector('.btn_wrap .sort');
 let itemCount = 0;
 
 function clearList(){
@@ -39,11 +40,13 @@ function sendValue() {
 
 function deleteList(e){
     // if line-through 지울 경우 --> itemCount 감소하지 X
+    if(e.target.parentNode.children[0].style.textDecoration !== "line-through"){
+        --itemCount;
+    }
     e.target.parentNode.remove();
-    --itemCount;
     updateStatus();
 }
-
+                                   
 function finishList(e)
 {
     // how to set data attribute
@@ -71,6 +74,30 @@ function handleList(e){
     }
 }
 
+function sortList(e)
+{
+    for (let index = 0; index < list.children.length; index++) {
+        switch(e.target.id)
+        {
+            case 'all':
+                console.log('all');
+                list.children[index].style.height = "auto";
+            break;
+            case 'active':
+                if(list.children[index].children[0].style.textDecoration === "line-through"){list.children[index].style.height = 0;}
+                else {list.children[index].style.height = "auto";}
+            break;
+            case 'completed':
+                if(list.children[index].children[0].style.textDecoration !== "line-through"){list.children[index].style.height = 0;}
+                else {list.children[index].style.height = "auto";}
+            break;
+            default:
+            return;
+        }
+    }
+    
+}
+
 input.addEventListener('blur', sendValue);
 input.addEventListener('keypress', function(e){
     if(e.key === 'Enter') sendValue();
@@ -79,3 +106,4 @@ list.addEventListener("click", handleList);
 
 
 clearBtn.addEventListener('click', clearList);
+btns.addEventListener('click', sortList);

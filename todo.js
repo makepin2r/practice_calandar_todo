@@ -8,8 +8,10 @@ let todoMap = new Map();
 
 function clearList(){
     list.innerHTML = '';
+    todoMap.delete(selectedDateKey);
     itemCount = 0;
     updateStatus();
+    printList();
 }
 
 function updateStatus(){
@@ -29,11 +31,7 @@ function updateStatus(){
 }
 
 function sendValue() {
-    if (input.value !== '') {
-        const li = document.createElement('li');
-        li.innerHTML = `<span>${input.value}</span> <button>삭제</button>`;
-        list.appendChild(li);
-        
+    if (input.value !== '') {      
         // map
         if(!todoMap.has(selectedDateKey)){
             todoMap.set(selectedDateKey, []);
@@ -47,6 +45,7 @@ function sendValue() {
         input.value = ""; 
         ++itemCount;  
         updateStatus();
+        printList();
     }
 }
 
@@ -57,13 +56,19 @@ function deleteList(e){
     if(e.target.parentNode.children[0].style.textDecoration !== "line-through"){
         --itemCount;
     }
-    todoMap.get(selectedDateKey).forEach(element => {
-        if(element.content === e.target.parentNode.children[0].innerHTML){
-            const idx = curArr.indexOf(element);
-            console.log(idx);
-            curArr.splice(idx, 1);
-            console.log(todoMap);
-        }
+    // curArr.forEach(element => {
+    //     if(element.content === e.target.parentNode.children[0].innerHTML){
+    //         const idx = curArr.indexOf(element);
+    //         console.log(idx);
+    //         curArr.splice(idx, 1);
+    //         break;
+    //     }
+    // });
+    curArr.some(function(item, index, array){
+        if(item.content === e.target.parentNode.children[0].innerHTML){
+                console.log(index);
+                curArr.splice(index, 1);
+            }
     });
     e.target.parentNode.remove();
 
@@ -78,15 +83,22 @@ function finishList(e)
 {
     // how to set data attribute
     // https://stackoverflow.com/questions/11286661/set-custom-attribute-using-javascript
-    var curState = e.target.style.textDecoration;
-    if (curState === "line-through") {
-        e.target.style.textDecoration = "none";
-        ++itemCount;    
-    } else {
-        e.target.style.textDecoration = "line-through";   
-        --itemCount; 
-    }
+    const curArr = todoMap.get(selectedDateKey);
+    // curArr.forEach(element => {
+    //     if(element.content === e.target.parentNode.children[0].innerHTML){
+    //         element.status = 'completed';
+    //         e.target.style.textDecoration = 'line-through';
+    //     }
+    // });
+    curArr.some(function(item, index, array){
+        if(item.content === e.target.parentNode.children[0].innerHTML){
+                    item.status = 'completed';
+                    e.target.style.textDecoration = 'line-through';
+                }
+    });
+    --itemCount;
     updateStatus();
+    printList();
 }
 
 function handleList(e){
@@ -121,8 +133,22 @@ function sortList(e)
             default:
             return;
         }
+    }   
+}
+
+function printList(){
+    list.innerHTML = '';
+    const curArr = todoMap.get(selectedDateKey);
+    if(curArr !== undefined){
+        for (let i = 0; i < curArr.length; ++i) {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${curArr[i].content}</span> <button>삭제</button>`;
+            if(curArr[i].status === "completed"){
+                li.children[0].style.textDecoration = 'line-through';
+            }
+            list.appendChild(li);
+        }
     }
-    
 }
 
 input.addEventListener('blur', sendValue);

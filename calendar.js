@@ -88,6 +88,7 @@ function selectDate(e){
         updateSelectedDateKey(e.target.innerHTML, curCalMonth, curCalYear);
         printCal(curCalMonth, curCalYear);
         console.log(selectedDateKey);
+        printList();
     }
 }
 

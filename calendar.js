@@ -17,7 +17,7 @@ curDate.innerHTML = date.getDate();
 curMonthYear.innerHTML = `${date.getMonth() + 1} ${date.getFullYear()}`;
 
 let selectedDateKey = '';
-let selectedDateTd = undefined;
+//let selectedDateTd = undefined;
 
 
 // zeller's congruence
@@ -45,6 +45,8 @@ function printCal(m, y){
     if(m === 1) {
         if(((y % 4 === 0)  && (y % 100 !== 0)) || y % 400 === 0){ // 윤년 {
            lastDate = 29;
+        } else {
+            lastDate = 28;
         }
     } else if(m === 7 || m % 2 === 0) {
         lastDate = 31;
@@ -76,15 +78,15 @@ function printCal(m, y){
     }
 }
 
+function updateSelectedDateKey(d, m, y){
+    selectedDateKey = `${d < 10 ? `0` + d : d}${(m + 1) < 10 ? `0` + (m + 1) : m + 1}${y}`;
+}
+
 function selectDate(e){
     if (e.target.nodeName === "TD" && e.target.innerHTML !== '')
     {
-        if(selectedDateTd !== undefined){
-            selectedDateTd.classList.remove('clicked');
-        }
-        e.target.classList.add('clicked');
-        selectedDateTd = e.target;
-        selectedDateKey = `${e.target.innerHTML < 10 ? `0` + e.target.innerHTML : e.target.innerHTML}${(curCalMonth + 1) < 10 ? `0` + (curCalMonth + 1) : curCalMonth + 1}${curCalYear}`;
+        updateSelectedDateKey(e.target.innerHTML, curCalMonth, curCalYear);
+        printCal(curCalMonth, curCalYear);
         console.log(selectedDateKey);
     }
 }
@@ -113,6 +115,7 @@ btnNext.addEventListener('click', function(){
 
 
 function init(){
+    updateSelectedDateKey(date.getDate(), curCalMonth, curCalYear);
     printCal(curCalMonth, curCalYear);
 }
 

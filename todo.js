@@ -4,6 +4,7 @@ const clearBtn = document.querySelector('button.clear');
 const status = document.querySelector('.status');
 const btns = document.querySelector('.btn_wrap .sort');
 let itemCount = 0;
+let todoMap = new Map();
 
 function clearList(){
     list.innerHTML = '';
@@ -32,6 +33,17 @@ function sendValue() {
         const li = document.createElement('li');
         li.innerHTML = `<span>${input.value}</span> <button>삭제</button>`;
         list.appendChild(li);
+        
+        // map
+        if(!todoMap.has(selectedDateKey)){
+            todoMap.set(selectedDateKey, []);
+        }
+        todoMap.get(selectedDateKey).push({
+            content: input.value,
+            status: "active",
+        });
+        console.log(todoMap);
+
         input.value = ""; 
         ++itemCount;  
         updateStatus();
@@ -39,11 +51,26 @@ function sendValue() {
 }
 
 function deleteList(e){
+    const curArr = todoMap.get(selectedDateKey);
+
     // if line-through 지울 경우 --> itemCount 감소하지 X
     if(e.target.parentNode.children[0].style.textDecoration !== "line-through"){
         --itemCount;
     }
+    todoMap.get(selectedDateKey).forEach(element => {
+        if(element.content === e.target.parentNode.children[0].innerHTML){
+            const idx = curArr.indexOf(element);
+            console.log(idx);
+            curArr.splice(idx, 1);
+            console.log(todoMap);
+        }
+    });
     e.target.parentNode.remove();
+
+    // if 0 elements, remove the pair
+    if(curArr.length === 0){
+        todoMap.delete(selectedDateKey);
+    }
     updateStatus();
 }
                                    

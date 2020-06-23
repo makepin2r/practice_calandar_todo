@@ -5,19 +5,26 @@ h1 { text-align: center; padding: 50px 0; font-size: 100px;}
 p { margin: 0;}
 ul, li { margin: 0; padding: 0; list-style: none;}
 .box_wrap { width: 100%; display: flex; justify-content: center;}
-.box { border: 1px solid #000; width: 600px; height: 600px; }
+.box { border: 1px solid #000; width: 600px; height: auto; justify-content: flex-start; flex-direction: column; }
 
-.box.calendar { margin-right: 50px; display: flex; align-items: center; justify-content: space-between; flex-direction: column;}
+.box.calendar { margin-right: 50px; }
 .calendar .text_wrap { display: 100%; align-items: center; flex-direction: column; }
 .calendar .text_wrap > P { text-align: center;}
-.calendar .day { font-size: 50px; margin: 20px 0;}
-.calendar .date, .calendar .month-year { font-size: 40px; margin-bottom: 20px;}
+.calendar .day { font-size: 30px; }
+.calendar .date { font-size: 60px; }
+.calendar .month-year { font-size: 30px; margin-bottom: 20px; }
 .calendar .table_wrap { width: 100%; display: flex; justify-content: center;}
 .calendar .table_wrap .btn { display: block; width: 28px; height: 40px; font-size: 30px; cursor: pointer;}
-.calendar .table_wrap .table { width: 300px; height: 300px; background: #cccccc;}
+.calendar .table_wrap .table { width: 300px; height: auto; }
 .calendar .table_wrap .table #cur-month-year { text-align: center;}
+.calendar .table_wrap .table table { width: 100%; margin: 0;}
+.calendar .table_wrap .table span { margin: 0; padding: 0; width: 100%; display: inline-block;}
+.calendar .table_wrap .table th {width: 40px; height: 40px; text-align: center;}
+.calendar .table_wrap .table td { cursor: default; width: 40px; height: 40px; line-height: 40px; text-align: center;}
+.calendar .table_wrap .table tbody td.clicked { background: #ccc; border-radius: 50%; color: #fff;}
+.calendar .table_wrap .table thead tr:first-child td { padding-bottom: 10px;}
 
-.todo { display: flex; justify-content: space-between; flex-direction: column; align-items: center;}
+.todo { display: flex; align-items: center; justify-content: space-between;}
 .todo .form_wrap { width: 100%;}
 .todo .form_wrap p.title { font-size: 50px; margin: 20px 0; text-align: center;}
 .todo .form_wrap input[type="text"] { border: 0; border-bottom: 1px solid black; background: transparent; margin: 0 30px; width: calc(100% - 60px); height: 50px; box-sizing: border-box; font-size: 30px; margin-bottom: 30px;}

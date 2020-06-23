@@ -16,6 +16,9 @@ curDay.innerHTML = DAY[date.getDay()];
 curDate.innerHTML = date.getDate();
 curMonthYear.innerHTML = `${date.getMonth() + 1} ${date.getFullYear()}`;
 
+let selectedDateKey = '';
+let selectedDateTd = undefined;
+
 
 // zeller's congruence
 // 1기준임 --> 바꾸기
@@ -33,6 +36,8 @@ function zeller(d, m, y){
 
 // 0기준임
 function printCal(m, y){
+    // selectedDateTr 키값을 저장해서 유지되게 해줘야 함.
+
     calendarName.innerHTML = `${MONTH[m]} ${y}`;
     //erase previous calendar
     calendar.innerHTML = '';
@@ -40,19 +45,15 @@ function printCal(m, y){
     if(m === 1) {
         if(((y % 4 === 0)  && (y % 100 !== 0)) || y % 400 === 0){ // 윤년 {
            lastDate = 29;
-           console. log('1st');
         }
     } else if(m === 7 || m % 2 === 0) {
         lastDate = 31;
-        console. log('2nd');
-    } else { lastDate = 30; console. log('3rd');}
-    console.log('last date is ' + lastDate);
+    } else { lastDate = 30;}
 
     let i = 1;
     while(i <= lastDate){
         var newTr = document.createElement('tr');
         for(let j = 0; j < 7; ++j){
-            console.log(j);
             if(i === 1){ // 시작일이라면?
                 for(let k = 0; k < zeller(1, m + 1, y); ++k){
                     let newTd = document.createElement('td');
@@ -62,6 +63,9 @@ function printCal(m, y){
             }
             let newTd = document.createElement('td');
             newTd.innerHTML = i;
+            if( `${i < 10 ? `0` + i : i}${(m + 1) < 10 ? `0` + (m + 1) : m + 1}${y}` === selectedDateKey){
+                newTd.classList.add('clicked');
+            }
             newTr.appendChild(newTd);
             if(i++ >= lastDate){
                 calendar.appendChild(newTr);
@@ -71,6 +75,21 @@ function printCal(m, y){
         calendar.appendChild(newTr);
     }
 }
+
+function selectDate(e){
+    if (e.target.nodeName === "TD" && e.target.innerHTML !== '')
+    {
+        if(selectedDateTd !== undefined){
+            selectedDateTd.classList.remove('clicked');
+        }
+        e.target.classList.add('clicked');
+        selectedDateTd = e.target;
+        selectedDateKey = `${e.target.innerHTML < 10 ? `0` + e.target.innerHTML : e.target.innerHTML}${(curCalMonth + 1) < 10 ? `0` + (curCalMonth + 1) : curCalMonth + 1}${curCalYear}`;
+        console.log(selectedDateKey);
+    }
+}
+
+document.querySelector('.table tbody').addEventListener('click', selectDate);
 
 btnPrev.addEventListener('click', function(){
     if(curCalMonth === 0) {
